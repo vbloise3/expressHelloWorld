@@ -9,10 +9,14 @@ var http = require("http");
 var app = express();
 
 var publicPath = path.resolve(__dirname, "public");
+app.set("views", path.resolve(__dirname, "views"));
+app.set("view engine", "ejs");
 app.use(express.static(publicPath));
 
 app.get("/", function(request, response) {
-    response.end("Welcome to my homepage");
+    response.render("index", {
+        message: "Hey loser! This is my webpage"
+    });
 });
 
 app.get("/about", function(request, response) {
@@ -24,7 +28,9 @@ app.get("/weather", function(request, response) {
 });
 
 app.get("/hello/:who", function(request, response) {
-    response.end("Hello, " + request.params.who + ".");
+    response.render("index", {
+        message: 'Hello, ' + request.params.who + '.'
+    });
 });
 
 app.use(function(request, response) {
